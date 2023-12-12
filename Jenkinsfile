@@ -9,11 +9,14 @@ pipeline {
             steps {
                 cleanWs()
             }
+        }
+
         stage("Checkout from SCM") {
                steps {
                    git branch: 'main', credentialsId: 'Github', url: 'https://github.com/Mir9438/gitops-register-app.git'
                }
-            }    
+        }
+
         stage("Update the Deployment Tags") {
             steps {
                 sh """
@@ -22,10 +25,11 @@ pipeline {
                    cat deployment.yaml
                 """
             }
-        }  
+        }
+
         stage("Push the changed deployment file to Git") {
-        steps {
-            sh """
+            steps {
+                sh """
                    git config --global user.name "Mir9438"
                    git config --global user.email "mir.ali19912@gmail.com"
                    git add deployment.yaml
@@ -36,8 +40,6 @@ pipeline {
                 }
             }
         }
-            
-     }   
-    
+      
     }
 }
